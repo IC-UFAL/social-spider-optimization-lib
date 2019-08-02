@@ -1,11 +1,11 @@
 package br.ufal.ic.dual_core.social_spider;
 
-public class SocialSpider {
+public class SocialSpider implements Comparable<SocialSpider> {
     int n;
     double[] values;
     double fitness, weight;
 
-    public SocialSpider(int n) {
+    SocialSpider(int n) {
         this.n = n;
         this.values = new double[n];
     }
@@ -21,5 +21,10 @@ public class SocialSpider {
         }
 
         return Math.sqrt(distance);
+    }
+
+    @Override
+    public int compareTo(SocialSpider other) {
+        return Double.compare(fitness, other.fitness);
     }
 }
