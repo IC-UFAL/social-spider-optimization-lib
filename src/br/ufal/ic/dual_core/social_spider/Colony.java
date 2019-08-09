@@ -12,11 +12,13 @@ public class Colony {
     private double rangeOfMating, PF = 0.7;
     private SocialSpider[] spiders;
     private FitnessFunction fitness;
+    private DecoderFunction decoder;
 
-    public Colony(int N, List<Pair<Double, Double>> minMaxRanges, FitnessFunction fitnessFunc) {
+    public Colony(int N, List<Pair<Double, Double>> minMaxRanges, FitnessFunction fitnessFunc, DecoderFunction decoderFunc) {
         this.N = N;
         spiders = new SocialSpider[N];
         fitness = fitnessFunc;
+        decoder = decoderFunc;
 
         // Step 1
         Nf = (int) Math.floor((0.9 - Math.random() * 0.25) * N);
@@ -63,6 +65,10 @@ public class Colony {
 
         // Step 6
         copulateSpiders();
+
+        // Decode
+        SocialSpider bestSpider = getSpiderB();
+        decoder.decode(bestSpider.values);
     }
 
     private void calculateWeights(boolean calculateFitness) {
