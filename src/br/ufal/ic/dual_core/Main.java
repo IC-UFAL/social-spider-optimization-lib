@@ -15,7 +15,7 @@ public class Main {
         ranges.add(new Pair<>(-1.0, 1.0));
         ranges.add(new Pair<>(-1.0, 1.0));
 
-        Colony colony = new Colony(25, ranges, (values) -> 1);
+        Colony colony = new Colony(25, ranges, (values) -> 1, (System.out::println));
         colony.nextGeneration();
     }
 }
