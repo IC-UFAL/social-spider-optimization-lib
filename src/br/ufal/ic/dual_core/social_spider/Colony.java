@@ -91,6 +91,7 @@ public class Colony {
 
         for (SocialSpider spider : spiders) {
             spider.weight = (spider.fitness - worstS) / (bestS - worstS);
+            assert !Double.isNaN(spider.weight);
         }
     }
 
@@ -115,10 +116,6 @@ public class Colony {
         double shortestDistance = Double.MAX_VALUE;
 
         for (int c = 0; c < N; c++) {
-            if (c == i) {
-                continue;
-            }
-
             if (spiders[c].weight > spiders[i].weight) {
                 double distance = spiders[i].euclidianDistance(spiders[c]);
                 if (distance < shortestDistance) {
@@ -151,7 +148,7 @@ public class Colony {
         assert spiders.length > 0;
 
         SocialSpider spiderF = spiders[0];
-        double shortestDistance = Double.MAX_VALUE;
+        double shortestDistance = spiders[i].euclidianDistance(spiders[0]);
 
         for (int f = 1; f < Nf; f++) {
             double distance = spiders[i].euclidianDistance(spiders[f]);
@@ -167,7 +164,7 @@ public class Colony {
     private SocialSpider getMedianMale() {
         assert spiders.length > 0;
 
-        SocialSpider[] males = Arrays.copyOfRange(spiders, Nf, N - 1);
+        SocialSpider[] males = Arrays.copyOfRange(spiders, Nf, N);
         assert males.length == Nm;
 
         Arrays.sort(males);
